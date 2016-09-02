@@ -1,5 +1,6 @@
 module Options exposing (..)
 
+import String exposing (..)
 import RandomStuff exposing (..)
 
 
@@ -125,4 +126,4 @@ myIsSome ro =
 
 myIsSomeString : RandomOption -> String
 myIsSomeString ro =
-    toString (myIsSome ro)
+    String.toLower (toString (myIsSome ro))
