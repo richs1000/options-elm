@@ -9472,9 +9472,21 @@ var _user$project$Question$Question = F4(
 		return {question: a, distractors: b, answer: c, format: d};
 	});
 var _user$project$Question$MultipleChoice = {ctor: 'MultipleChoice'};
+var _user$project$Question$FillInTheBlank = {ctor: 'FillInTheBlank'};
+var _user$project$Question$emptyQuestion = {
+	question: _elm_lang$core$Native_List.fromArray(
+		[]),
+	distractors: _elm_lang$core$Native_List.fromArray(
+		[]),
+	answer: {ctor: '_Tuple2', _0: '', _1: ''},
+	format: _user$project$Question$FillInTheBlank
+};
 var _user$project$Question$newQuestion = F2(
 	function (randomValues, index) {
-		if (_elm_lang$core$Native_Utils.eq(index, 1)) {
+		if (_elm_lang$core$Native_Utils.eq(index, 1) || _elm_lang$core$Native_Utils.eq(index, 2)) {
+			var format$ = _elm_lang$core$Native_Utils.eq(
+				A2(_elm_lang$core$Basics$rem, index, 2),
+				1) ? _user$project$Question$MultipleChoice : _user$project$Question$FillInTheBlank;
 			var rOption = _user$project$Options$randomSomething(randomValues);
 			var question$ = _elm_lang$core$Native_List.fromArray(
 				[
@@ -9501,9 +9513,12 @@ var _user$project$Question$newQuestion = F2(
 					_1: 'Incorrect.'
 				}
 				]);
-			return {question: question$, distractors: distractors$, answer: answer$, format: _user$project$Question$MultipleChoice};
+			return {question: question$, distractors: distractors$, answer: answer$, format: format$};
 		} else {
-			if (_elm_lang$core$Native_Utils.eq(index, 2)) {
+			if (_elm_lang$core$Native_Utils.eq(index, 3) || _elm_lang$core$Native_Utils.eq(index, 4)) {
+				var format$ = _elm_lang$core$Native_Utils.eq(
+					A2(_elm_lang$core$Basics$rem, index, 2),
+					1) ? _user$project$Question$MultipleChoice : _user$project$Question$FillInTheBlank;
 				var rOption = _user$project$Options$randomOption(randomValues);
 				var question$ = _elm_lang$core$Native_List.fromArray(
 					[
@@ -9532,8 +9547,11 @@ var _user$project$Question$newQuestion = F2(
 						_1: 'Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE'
 					}
 					]);
-				return {question: question$, distractors: distractors$, answer: answer$, format: _user$project$Question$MultipleChoice};
+				return {question: question$, distractors: distractors$, answer: answer$, format: format$};
 			} else {
+				var format$ = _elm_lang$core$Native_Utils.eq(
+					A2(_elm_lang$core$Basics$rem, index, 2),
+					1) ? _user$project$Question$MultipleChoice : _user$project$Question$FillInTheBlank;
 				var distractors$ = _elm_lang$core$Native_List.fromArray(
 					['NONE', 'SOME int', 'SOME bool', 'SOME string', 'int option', 'bool option', 'string option', '\'a option']);
 				var rOption = _user$project$Options$randomOption(randomValues);
@@ -9564,20 +9582,11 @@ var _user$project$Question$newQuestion = F2(
 						},
 						distractors$$),
 					answer: {ctor: '_Tuple2', _0: answer$, _1: 'Correct'},
-					format: _user$project$Question$MultipleChoice
+					format: format$
 				};
 			}
 		}
 	});
-var _user$project$Question$FillInTheBlank = {ctor: 'FillInTheBlank'};
-var _user$project$Question$emptyQuestion = {
-	question: _elm_lang$core$Native_List.fromArray(
-		[]),
-	distractors: _elm_lang$core$Native_List.fromArray(
-		[]),
-	answer: {ctor: '_Tuple2', _0: '', _1: ''},
-	format: _user$project$Question$FillInTheBlank
-};
 
 var _user$project$ModelType$Model = function (a) {
 	return function (b) {
@@ -10022,7 +10031,7 @@ var _user$project$Update$update = F2(
 						_1: A2(
 							_elm_lang$core$Random$generate,
 							_user$project$MessageTypes$NewQuestion,
-							A2(_elm_lang$core$Random$int, 1, 3))
+							A2(_elm_lang$core$Random$int, 1, 6))
 					};
 				case 'NewQuestion':
 					var question$ = A2(_user$project$Question$newQuestion, model.randomValues, _p0._0);

@@ -18,7 +18,7 @@ update msg model =
 
         NewRandomValues newValues ->
             ( { model | randomValues = newValues }
-            , Random.generate NewQuestion (Random.int 1 3)
+            , Random.generate NewQuestion (Random.int 1 6)
             )
 
         -- New Question Flow: NewQuestion -> UserInput -> Submit -> Give Feedback -> Check Mastery
