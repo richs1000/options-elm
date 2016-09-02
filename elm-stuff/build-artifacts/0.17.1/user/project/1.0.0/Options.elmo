@@ -7,8 +7,9 @@ var _user$project$Options$myIsSome = function (ro) {
 	}
 };
 var _user$project$Options$myIsSomeString = function (ro) {
-	return _elm_lang$core$Basics$toString(
-		_user$project$Options$myIsSome(ro));
+	return _elm_lang$core$String$toLower(
+		_elm_lang$core$Basics$toString(
+			_user$project$Options$myIsSome(ro)));
 };
 var _user$project$Options$stringValOf = function (ro) {
 	var _p1 = ro;
