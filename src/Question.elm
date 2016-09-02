@@ -1,8 +1,6 @@
 module Question exposing (..)
 
 import Options exposing (..)
-import RandomStuff exposing (pickOne, pickABunch, compressList)
-import Debug exposing (..)
 
 
 type QuestionFormat
@@ -34,7 +32,7 @@ emptyQuestion =
 newQuestion : List Int -> Int -> Question
 newQuestion randomValues index =
     -- use valOf to extract
-    if index == 1 then
+    if index == 1 || index == 2 then
         let
             rOption =
                 randomSomething randomValues
@@ -60,14 +58,20 @@ newQuestion randomValues index =
                   , "Incorrect."
                   )
                 ]
+
+            format' =
+                if (index `rem` 2) == 1 then
+                    MultipleChoice
+                else
+                    FillInTheBlank
         in
             { question = question'
             , distractors = distractors'
             , answer = answer'
-            , format = MultipleChoice
+            , format = format'
             }
         -- isSome
-    else if index == 2 then
+    else if index == 3 || index == 4 then
         let
             rOption =
                 randomOption randomValues
@@ -93,11 +97,17 @@ newQuestion randomValues index =
                   , "Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE"
                   )
                 ]
+
+            format' =
+                if (index `rem` 2) == 1 then
+                    MultipleChoice
+                else
+                    FillInTheBlank
         in
             { question = question'
             , distractors = distractors'
             , answer = answer'
-            , format = MultipleChoice
+            , format = format'
             }
         -- types
     else
@@ -112,20 +122,6 @@ newQuestion randomValues index =
                 , ""
                 ]
 
-            -- answer' =
-            --     tupOfTups
-            --         |> extractTupleFromTuple interiorIndex
-            --         |> extractItemFromTuple exteriorIndex
-            --         |> tupleItemToString
-            --
-            -- distractors' =
-            --     Debug.log "compressed "
-            --         (compressList
-            --             (tupleOfTuplesToFlatListOfStrings tupOfTups)
-            --         )
-            --
-            -- ( _, distractors'' ) =
-            --     List.partition (\d -> d == answer') distractors'
             answer' =
                 (optionToTypeString rOption "option")
 
@@ -142,11 +138,17 @@ newQuestion randomValues index =
 
             ( _, distractors'' ) =
                 List.partition (\d -> d == answer') distractors'
+
+            format' =
+                if (index `rem` 2) == 1 then
+                    MultipleChoice
+                else
+                    FillInTheBlank
         in
             { question = question'
             , distractors = List.map (\dis -> ( dis, "Incorrect." )) distractors''
             , answer = ( answer', "Correct" )
-            , format = MultipleChoice
+            , format = format'
             }
 
 
