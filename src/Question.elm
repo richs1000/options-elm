@@ -1,5 +1,6 @@
 module Question exposing (..)
 
+import String exposing (toLower)
 import Options exposing (..)
 
 
@@ -93,7 +94,7 @@ newQuestion randomValues index =
                 [ ( "None"
                   , "Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE"
                   )
-                , ( toString (not (myIsSome rOption))
+                , ( String.toLower (toString (not (myIsSome rOption)))
                   , "Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE"
                   )
                 ]
