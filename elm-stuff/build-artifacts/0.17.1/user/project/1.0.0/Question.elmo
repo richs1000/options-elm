@@ -102,9 +102,10 @@ var _user$project$Question$newQuestion = F2(
 						{ctor: '_Tuple2', _0: 'None', _1: 'Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE'},
 						{
 						ctor: '_Tuple2',
-						_0: _elm_lang$core$Basics$toString(
-							_elm_lang$core$Basics$not(
-								_user$project$Options$myIsSome(rOption))),
+						_0: _elm_lang$core$String$toLower(
+							_elm_lang$core$Basics$toString(
+								_elm_lang$core$Basics$not(
+									_user$project$Options$myIsSome(rOption)))),
 						_1: 'Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE'
 					}
 					]);
