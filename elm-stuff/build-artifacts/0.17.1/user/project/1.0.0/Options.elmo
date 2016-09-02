@@ -1,0 +1,122 @@
+var _user$project$Options$myIsSome = function (ro) {
+	var _p0 = ro;
+	if (_p0.ctor === 'RandomNone') {
+		return false;
+	} else {
+		return true;
+	}
+};
+var _user$project$Options$myIsSomeString = function (ro) {
+	return _elm_lang$core$Basics$toString(
+		_user$project$Options$myIsSome(ro));
+};
+var _user$project$Options$stringValOf = function (ro) {
+	var _p1 = ro;
+	switch (_p1.ctor) {
+		case 'RandomInt':
+			return _elm_lang$core$Basics$toString(_p1._0);
+		case 'RandomString':
+			return _elm_lang$core$Basics$toString(_p1._0);
+		case 'RandomBool':
+			return _elm_lang$core$Basics$toString(_p1._0);
+		default:
+			return 'NONE';
+	}
+};
+var _user$project$Options$optionToString = function (ro) {
+	var _p2 = ro;
+	switch (_p2.ctor) {
+		case 'RandomInt':
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				'SOME ',
+				_elm_lang$core$Basics$toString(_p2._0));
+		case 'RandomString':
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				'SOME ',
+				_elm_lang$core$Basics$toString(_p2._0));
+		case 'RandomBool':
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				'SOME ',
+				_elm_lang$core$Basics$toString(_p2._0));
+		default:
+			return 'NONE';
+	}
+};
+var _user$project$Options$optionToTypeString = F2(
+	function (ro, suffix) {
+		var _p3 = ro;
+		switch (_p3.ctor) {
+			case 'RandomInt':
+				return A2(_elm_lang$core$Basics_ops['++'], 'int ', suffix);
+			case 'RandomString':
+				return A2(_elm_lang$core$Basics_ops['++'], 'string ', suffix);
+			case 'RandomBool':
+				return A2(_elm_lang$core$Basics_ops['++'], 'bool ', suffix);
+			default:
+				return A2(_elm_lang$core$Basics_ops['++'], '\'a ', suffix);
+		}
+	});
+var _user$project$Options$RandomNone = {ctor: 'RandomNone'};
+var _user$project$Options$RandomBool = function (a) {
+	return {ctor: 'RandomBool', _0: a};
+};
+var _user$project$Options$RandomString = function (a) {
+	return {ctor: 'RandomString', _0: a};
+};
+var _user$project$Options$RandomInt = function (a) {
+	return {ctor: 'RandomInt', _0: a};
+};
+var _user$project$Options$RNone = {ctor: 'RNone'};
+var _user$project$Options$RBool = {ctor: 'RBool'};
+var _user$project$Options$RString = {ctor: 'RString'};
+var _user$project$Options$RInt = {ctor: 'RInt'};
+var _user$project$Options$randomOptionHelper = F2(
+	function (randomValues, optionTypes) {
+		var rType = A3(_user$project$RandomStuff$pickOne, randomValues, optionTypes, _user$project$Options$RInt);
+		var randStrings = _elm_lang$core$Native_List.fromArray(
+			['dog', 'cat', 'pig', 'moose', 'cow', 'bird']);
+		var _p4 = rType;
+		switch (_p4.ctor) {
+			case 'RBool':
+				var rVal = A3(
+					_user$project$RandomStuff$pickOne,
+					A2(_elm_lang$core$List$drop, 1, randomValues),
+					_elm_lang$core$Native_List.fromArray(
+						[1, 2]),
+					1);
+				return _elm_lang$core$Native_Utils.eq(rVal, 1) ? _user$project$Options$RandomBool(true) : _user$project$Options$RandomBool(false);
+			case 'RInt':
+				var rVal = A3(
+					_user$project$RandomStuff$pickOne,
+					A2(_elm_lang$core$List$drop, 1, randomValues),
+					_elm_lang$core$Native_List.range(0, 9),
+					1);
+				return _user$project$Options$RandomInt(rVal);
+			case 'RString':
+				var rVal = A3(
+					_user$project$RandomStuff$pickOne,
+					A2(_elm_lang$core$List$drop, 1, randomValues),
+					randStrings,
+					'cat');
+				return _user$project$Options$RandomString(rVal);
+			default:
+				return _user$project$Options$RandomNone;
+		}
+	});
+var _user$project$Options$randomSomething = function (randomValues) {
+	return A2(
+		_user$project$Options$randomOptionHelper,
+		randomValues,
+		_elm_lang$core$Native_List.fromArray(
+			[_user$project$Options$RInt, _user$project$Options$RString, _user$project$Options$RBool]));
+};
+var _user$project$Options$randomOption = function (randomValues) {
+	return A2(
+		_user$project$Options$randomOptionHelper,
+		randomValues,
+		_elm_lang$core$Native_List.fromArray(
+			[_user$project$Options$RInt, _user$project$Options$RString, _user$project$Options$RBool, _user$project$Options$RNone]));
+};

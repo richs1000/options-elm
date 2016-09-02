@@ -1,0 +1,141 @@
+var _user$project$Question$findFeedback = F3(
+	function (answer, response, distractors) {
+		findFeedback:
+		while (true) {
+			var _p0 = distractors;
+			if (_p0.ctor === '[]') {
+				return A2(_elm_lang$core$Basics_ops['++'], 'Incorrect. The answer is ', answer);
+			} else {
+				var _p1 = _p0._0;
+				if (_elm_lang$core$Native_Utils.eq(
+					_elm_lang$core$Basics$fst(_p1),
+					response) || _elm_lang$core$Native_Utils.eq(
+					_elm_lang$core$Basics$fst(_p1),
+					'')) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$snd(_p1),
+						A2(_elm_lang$core$Basics_ops['++'], ' The answer is ', answer));
+				} else {
+					var _v1 = answer,
+						_v2 = response,
+						_v3 = _p0._1;
+					answer = _v1;
+					response = _v2;
+					distractors = _v3;
+					continue findFeedback;
+				}
+			}
+		}
+	});
+var _user$project$Question$Question = F4(
+	function (a, b, c, d) {
+		return {question: a, distractors: b, answer: c, format: d};
+	});
+var _user$project$Question$MultipleChoice = {ctor: 'MultipleChoice'};
+var _user$project$Question$newQuestion = F2(
+	function (randomValues, index) {
+		if (_elm_lang$core$Native_Utils.eq(index, 1)) {
+			var rOption = _user$project$Options$randomSomething(randomValues);
+			var question$ = _elm_lang$core$Native_List.fromArray(
+				[
+					'What is the value of ans after the following ML expressions are evaluated?',
+					'',
+					A2(
+					_elm_lang$core$Basics_ops['++'],
+					'val e = ',
+					_user$project$Options$optionToString(rOption)),
+					'val ans = valOf e',
+					''
+				]);
+			var answer$ = {
+				ctor: '_Tuple2',
+				_0: _user$project$Options$stringValOf(rOption),
+				_1: 'Correct.'
+			};
+			var distractors$ = _elm_lang$core$Native_List.fromArray(
+				[
+					{ctor: '_Tuple2', _0: 'None', _1: 'Incorrect.'},
+					{
+					ctor: '_Tuple2',
+					_0: _user$project$Options$optionToString(rOption),
+					_1: 'Incorrect.'
+				}
+				]);
+			return {question: question$, distractors: distractors$, answer: answer$, format: _user$project$Question$MultipleChoice};
+		} else {
+			if (_elm_lang$core$Native_Utils.eq(index, 2)) {
+				var rOption = _user$project$Options$randomOption(randomValues);
+				var question$ = _elm_lang$core$Native_List.fromArray(
+					[
+						'What is the value of ans after the following ML expressions are evaluated?',
+						'',
+						A2(
+						_elm_lang$core$Basics_ops['++'],
+						'val e = ',
+						_user$project$Options$optionToString(rOption)),
+						'val ans = isSome e',
+						''
+					]);
+				var answer$ = {
+					ctor: '_Tuple2',
+					_0: _user$project$Options$myIsSomeString(rOption),
+					_1: 'Correct.'
+				};
+				var distractors$ = _elm_lang$core$Native_List.fromArray(
+					[
+						{ctor: '_Tuple2', _0: 'None', _1: 'Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE'},
+						{
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Basics$toString(
+							_elm_lang$core$Basics$not(
+								_user$project$Options$myIsSome(rOption))),
+						_1: 'Incorrect. isSome returns true if an option has a SOME value and false if an option has a value of NONE'
+					}
+					]);
+				return {question: question$, distractors: distractors$, answer: answer$, format: _user$project$Question$MultipleChoice};
+			} else {
+				var distractors$ = _elm_lang$core$Native_List.fromArray(
+					['NONE', 'SOME int', 'SOME bool', 'SOME string', 'int option', 'bool option', 'string option', '\'a option']);
+				var rOption = _user$project$Options$randomOption(randomValues);
+				var question$ = _elm_lang$core$Native_List.fromArray(
+					[
+						'What is the type of e?',
+						'',
+						A2(
+						_elm_lang$core$Basics_ops['++'],
+						'val e = ',
+						_user$project$Options$optionToString(rOption)),
+						''
+					]);
+				var answer$ = A2(_user$project$Options$optionToTypeString, rOption, 'option');
+				var _p2 = A2(
+					_elm_lang$core$List$partition,
+					function (d) {
+						return _elm_lang$core$Native_Utils.eq(d, answer$);
+					},
+					distractors$);
+				var distractors$$ = _p2._1;
+				return {
+					question: question$,
+					distractors: A2(
+						_elm_lang$core$List$map,
+						function (dis) {
+							return {ctor: '_Tuple2', _0: dis, _1: 'Incorrect.'};
+						},
+						distractors$$),
+					answer: {ctor: '_Tuple2', _0: answer$, _1: 'Correct'},
+					format: _user$project$Question$MultipleChoice
+				};
+			}
+		}
+	});
+var _user$project$Question$FillInTheBlank = {ctor: 'FillInTheBlank'};
+var _user$project$Question$emptyQuestion = {
+	question: _elm_lang$core$Native_List.fromArray(
+		[]),
+	distractors: _elm_lang$core$Native_List.fromArray(
+		[]),
+	answer: {ctor: '_Tuple2', _0: '', _1: ''},
+	format: _user$project$Question$FillInTheBlank
+};
